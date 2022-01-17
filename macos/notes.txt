@@ -1,0 +1,27 @@
+qt@5:
+  echo 'export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"' >> ~/.zshrc
+  export LDFLAGS="-L/opt/homebrew/opt/qt@5/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/qt@5/include"
+libarchive:
+  echo 'export PATH="/opt/homebrew/opt/libarchive/bin:$PATH"' >> ~/.zshrc
+  export LDFLAGS="-L/opt/homebrew/opt/libarchive/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/libarchive/include"
+qwt:
+  /opt/homebrew/Cellar/qwt/6.2.0_1
+
+==> Caveats
+jack:
+  brew services restart jack
+Or, if you don't want/need a background service you can just run:
+  /opt/homebrew/opt/jack/bin/jackd -X coremidi -d coreaudio
+
+==> Caveats
+zsh completions have been installed to:
+  /opt/homebrew/share/zsh/site-functions
+==> Caveats
+To restart pulseaudio after an upgrade:
+  brew services restart pulseaudio
+Or, if you don't want/need a background service you can just run:
+  /opt/homebrew/opt/pulseaudio/bin/pulseaudio --exit-idle-time=-1 --verbose
+
+

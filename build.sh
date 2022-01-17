@@ -19,8 +19,40 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+HOMEBREW=/opt/homebrew/opt
+QT=${HOMEBREW}/qt@5
+QTCMAKE=${QT}/lib/cmake
+LIBARCHIVE=${HOMEBREW}/libarchive
+LIBSNDFILE=${HOMEBREW}/libsndfile
+JACK=${HOMEBREW}/jack
 
-QTDIR=${QTDIR:-/usr/lib/qt}
+JACKBIN=${JACK}/bin
+JACKINCLUDE=${JACK}/include
+JACKLIB=${JACK}/lib
+
+LIBARCHIVEINCLUDE=${LIBARCHIVE}/include
+LIBARCHIVELIB=${LIBARCHIVE}/lib
+LIBARCHIVEPKGCONFIG=${LIBARCHIVELIB}/pkgconfig
+LIBSNDFILEINCLUDE=${LIBSNDFILE}/include
+LIBSNDFILELIB=${LIBSNDFILE}/lib
+
+export QTLIB=${QT}/lib
+export QTBIN=${QT}/bin
+export Qt5XmlPatterns_DIR=${QTCMAKE}/Qt5XmlPatterns
+export Qt5Xml_DIR=${QTCMAKE}/Qt5Xml
+export Qt5Widgets_DIR=${QTCMAKE}/Qt5Widgets
+export Qt5LinguistTools_DIR=${QTCMAKE}/Qt5LinguistTools
+export Qt5Test_DIR=${QTCMAKE}/Qt5Test
+export Qt5Svg_DIR=${QTCMAKE}/Qt5Svg
+# I know it is just a rename, but didn't want to mess with anything using the export
+export LIBSNDFILE_PATH=${LIBSNDFILEINCLUDE}
+export CMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+export SDKROOT=${CMAKE_OSX_SYSROOT}
+export PATH="${JACKBIN}:${LIBARCHIVEBIN}:${LIBSNDFILEINCLUDE}:$PATH"
+export LIBARCHIVE_INCLUDE_DIRS=${LIBARCHIVEPKGCONFIG}:${LIBARCHIVELIB}:${LIBARCHIVEINCLUDE}
+
+
+QTDIR=${QTLIB/qt}
 VERBOSE=${VERBOSE:-0}
 CMAKE_OPTIONS="
     -DCMAKE_COLOR_MAKEFILE=1 \

@@ -5,22 +5,22 @@ import os
 import sys
 import json
 
-DIR = 1
-LINK = 2
-FILE = 3
+IS_DIR = 1
+IS_LINK = 2
+IS_FILE = 3
 
 # Scan filesystem
 def scanTreeState(path):
     if os.path.islink(path):
-        yield [LINK, path ]
+        yield [IS_LINK, path ]
     elif os.path.isdir(path):
-        yield [DIR, path]
+        yield [IS_DIR, path]
         for leaf in os.listdir(path):
             p = os.path.join(path, leaf)
             for item in scanTreeState(p):
                 yield item
     else:
-        yield [FILE, path, os.path.getmtime(path)]
+        yield [IS_FILE, path, os.path.getmtime(path)]
 
 # Write the tree in JSON format
 def writeTree(filename, tree):
@@ -39,7 +39,7 @@ def findUpdates(a, b):
 
     # Build mapping of filename -> modified time in A
     for o in a:
-        if o[0] == FILE:
+        if o[0] == IS_FILE:
             a_map[ o[1] ] = o[2]
         else:
             a_map[ o[1] ] = True
@@ -47,10 +47,10 @@ def findUpdates(a, b):
     # Find updated or new items in B
     for o in b:
         if o[1] in a_map:
-            if o[0] == FILE and o[2] != a_map[ o[1] ]:
+            if o[0] == IS_FILE and o[2] != a_map[ o[1] ]:
                 print(o[1])
 
-        elif o[0] == FILE or o[0] == LINK:
+        elif o[0] == IS_FILE or o[0] == IS_LINK:
             print(o[1])
 
 
